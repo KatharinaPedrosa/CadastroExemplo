@@ -20,10 +20,12 @@ a, .btn-link {
 .content {
     padding-top: 1.1rem;
     overflow-y: scroll;
-    height: calc(100% - 260px);
+    height: calc(100% - 52px);
+    width: calc(100% - 249px);
     transition-property: transform,width;
     transition-duration: .2s;
     transition-timing-function: ease-in-out;
+    position: fixed;
 }
 
 .center-content {
