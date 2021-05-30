@@ -60,7 +60,7 @@ namespace Cadastro.Pages
             }
         }
 
-        public async Task DeleteUser(int id)
+        public async Task RemoveUser(int id)
         {
             if (service.State.LoggedUser == null) return;
             try

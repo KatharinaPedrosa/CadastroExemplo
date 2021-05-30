@@ -19,12 +19,12 @@
             </div>
             @foreach (var client in Clients)
             {
-                <div class="row @(Clients.IndexOf(client) % 2 == 0 ? "list-line-even" : "list-line-odd")">
-                    <span class="col-1">@client.Id</span>
-                    <span class="col-5">@client.Name</span>
-                    <span class="col-2">@client.PhoneNumber</span>
-                    <span class="col-2 list-button oi oi-pencil" @onclick="() => EditClient(client.Id)"></span>
-                    <span class="col-2 list-button oi oi-trash" @onclick="() => RemoveClient(client.Id)"></span>
+                <div class="row @(Clients.IndexOf(client) % 2 == 0 ? "list-line-even" : "list-line-odd")" id="Row-@(client.Id)">
+                    <span class="col-1" id="Id-@(client.Id)">@client.Id</span>
+                    <span class="col-5" id="Name-@(client.Id)">@client.Name</span>
+                    <span class="col-2" id="PhoneNumber-@(client.Id)">@client.PhoneNumber</span>
+                    <span class="col-2 list-button oi oi-pencil" @onclick="() => EditClient(client.Id)" id="Edit-@(client.Id)"></span>
+                    <span class="col-2 list-button oi oi-trash" @onclick="() => RemoveClient(client.Id)" id="Remove-@(client.Id)"></span>
                 </div>
             }
         </div>

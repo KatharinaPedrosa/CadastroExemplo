@@ -31,7 +31,7 @@
                     <EditForm Model="@LoginUser" OnValidSubmit="Login" class="mt-1 mr-0 row">
                         <span class="d-inline-flex">
                             <label class="my-auto mr-2 ml-4">Usuário</label>
-                            <InputText @bind-Value="LoginUser.Login" class="input-sm my-auto mr-2" id="User" />
+                            <InputText @bind-Value="LoginUser.Login" class="input-sm my-auto mr-2" id="Login" />
                             <ValidationMessage For="@(() => LoginUser.Login)" />
                         </span>
                         <div class="d-inline-flex">
@@ -50,7 +50,7 @@
                 else
                 {
                     <div class="mt-1">
-                        <button class="button my-auto mr-3" @onclick="service.RequestReload" id="SignOut">
+                        <button class="button my-auto mr-3" @onclick="service.RequestReload" id="Reload">
                             <span class="oi oi-reload" aria-hidden="true"></span>
                         </button>
                         <span class="oi oi-person ml-4" aria-hidden="true"></span>

@@ -16,13 +16,13 @@ else
         </div>
         @foreach (var user in Users)
         {
-            <div class="row @(Users.IndexOf(user) % 2 == 0 ? "list-line-even" : "list-line-odd")">
-                <span class="col-1">@user.Id</span>
-                <span class="col-5">@user.Login</span>
-                <span class="col-2 list-button oi oi-pencil" @onclick="() => SelectUser(user.Id)"></span>
+            <div class="row @(Users.IndexOf(user) % 2 == 0 ? "list-line-even" : "list-line-odd")" id="Row-@(user.Id)">
+                <span class="col-1" id="Id-@(user.Id)">@user.Id</span>
+                <span class="col-5" id="Login-@(user.Id)">@user.Login</span>
+                <span class="col-2 list-button oi oi-pencil" @onclick="() => SelectUser(user.Id)" id="Edit-@(user.Id)"></span>
                 @if (!user.IsAdmin)
                 {
-                    <span class="col-2 list-button oi oi-trash" @onclick="() => DeleteUser(user.Id)"></span>
+                    <span class="col-2 list-button oi oi-trash" @onclick="() => RemoveUser(user.Id)" id="Remove-@(user.Id)"></span>
                 }
                 else
                 {

@@ -2,7 +2,7 @@
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Cadastro</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+    <button class="navbar-toggler" @onclick="ToggleNavMenu" id="MenuToggler">
         <span class="navbar-toggler-icon"></span>
     </button>
 </div>
@@ -12,19 +12,19 @@
     {
         <ul class="nav flex-column">
             <li class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All" id="MenuClients">
                     <span class="oi oi-people" aria-hidden="true"></span> Clientes
                 </NavLink>
             </li>
             <li class="nav-item px-3">
-                <NavLink class="nav-link" href="ClientEdit">
+                <NavLink class="nav-link" href="ClientEdit" id="MenuClientEdit">
                     <span class="oi oi-plus" aria-hidden="true"></span> Cadastro
                 </NavLink>
             </li>
             @if (service?.State.LoggedUser.IsAdmin == true)
             {
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="Users">
+                    <NavLink class="nav-link" href="Users" id="MenuUsers">
                         <span class="oi oi-person" aria-hidden="true"></span> Usuários
                     </NavLink>
                 </li>
