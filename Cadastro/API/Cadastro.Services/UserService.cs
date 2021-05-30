@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Cadastro.Domain.Abstraction.Repositories;
@@ -11,43 +10,32 @@ using Microsoft.Extensions.Configuration;
 
 namespace Cadastro.Services
 {
-    public class UserService : IUserService
+    public class UserService : ServiceBase<User, UserEntity>, IUserService
     {
         private IUserRepository repository;
-        private IMapper mapper;
         private IConfiguration config;
 
         public UserService(
             IUserRepository repository,
             IMapper mapper,
             IConfiguration config)
+            : base(repository, mapper)
         {
             this.repository = repository;
-            this.mapper = mapper;
             this.config = config;
         }
 
-        public Task<int> AddUser(User user)
+        public override async Task<int> Delete(int id)
         {
-            var entity = mapper.Map<UserEntity>(user);
-            return repository.Add(entity);
-        }
-
-        public Task<int> DeleteUser(int id)
-        {
-            return repository.Delete(id);
-        }
-
-        public async Task<User> GetUser(int id)
-        {
-            var entity = await repository.GetById(id);
-            return mapper.Map<User>(entity);
-        }
-
-        public async Task<IList<User>> GetUsers()
-        {
-            var entities = await repository.GetAll();
-            return mapper.Map<List<User>>(entities);
+            var user = await repository.GetById(id);
+            if (!user.IsAdmin)
+            {
+                return await base.Delete(id);
+            }
+            else
+            {
+                throw new UnauthorizedAccessException("Não é possível deletar o usuário 'admin'");
+            }
         }
 
         public async Task<User> Login(User user)
@@ -55,7 +43,7 @@ namespace Cadastro.Services
             var entity = await repository.GetByLogin(user.Login);
             if (entity != null && entity.PasswordHash.Equals(user.PasswordHash, StringComparison.InvariantCultureIgnoreCase))
             {
-                User result = mapper.Map<User>(user);
+                User result = mapper.Map<User>(entity);
                 result.Token = AuthHelper.GetToken(result,
                     config.GetSection("Auth")["Secret"],
                     config.GetSection("Auth")["Issuer"]);
@@ -65,12 +53,6 @@ namespace Cadastro.Services
             {
                 throw new UnauthorizedAccessException(user.Login);
             }
-        }
-
-        public Task<int> UpdateUser(User user)
-        {
-            var entity = mapper.Map<UserEntity>(user);
-            return repository.Update(entity);
         }
     }
 }

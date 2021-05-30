@@ -1,7 +1,32 @@
 ﻿@page "/"
+@inherits IndexBase
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+@if (service.State.LoggedUser != null)
+{
+    @if (Loading)
+    {
+        <div>Carregando...</div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row cabecalho my-2">
+                <span class="col-1">Id</span>
+                <span class="col-5">Nome</span>
+                <span class="col-2">telefone</span>
+                <span class="col-2">Editar</span>
+                <span class="col-2">Remover</span>
+            </div>
+            @foreach (var client in Clients)
+            {
+                <div class="row @(Clients.IndexOf(client) % 2 == 0 ? "list-line-even" : "list-line-odd")">
+                    <span class="col-1">@client.Id</span>
+                    <span class="col-5">@client.Name</span>
+                    <span class="col-2">@client.PhoneNumber</span>
+                    <span class="col-2 list-button oi oi-pencil" @onclick="() => EditClient(client.Id)"></span>
+                    <span class="col-2 list-button oi oi-trash" @onclick="() => RemoveClient(client.Id)"></span>
+                </div>
+            }
+        </div>
+    }
+}

@@ -1,0 +1,66 @@
+﻿@page "/Users"
+@inherits UsersBase
+
+@if (Loading)
+{
+    <div>Carregando...</div>
+}
+else
+{
+    <div class="container">
+        <div class="row cabecalho my-2">
+            <span class="col-1">Id</span>
+            <span class="col-5">Login</span>
+            <span class="col-2">Editar</span>
+            <span class="col-2">Remover</span>
+        </div>
+        @foreach (var user in Users)
+        {
+            <div class="row @(Users.IndexOf(user) % 2 == 0 ? "list-line-even" : "list-line-odd")">
+                <span class="col-1">@user.Id</span>
+                <span class="col-5">@user.Login</span>
+                <span class="col-2 list-button oi oi-pencil" @onclick="() => SelectUser(user.Id)"></span>
+                @if (!user.IsAdmin)
+                {
+                    <span class="col-2 list-button oi oi-trash" @onclick="() => DeleteUser(user.Id)"></span>
+                }
+                else
+                {
+                    <span class="col-2"></span>
+                }
+            </div>
+        }
+
+        <EditForm Model="User" class="container card mt-5" OnValidSubmit="SaveUser">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label class="ml-2">Id</label>
+                <label class="ml-2 w-75" type="number" id="UserId">@User.Id</label>
+            </div>
+            @if (!User.IsAdmin)
+            {
+                <div class="form-group">
+                    <label class="ml-2 w-75">Login</label>
+                    <InputText @bind-Value="User.Login" class="row ml-2 w-75" type="text" id="UserLogin" />
+                    <ValidationMessage class="ml-2" For="@(() => User.Login)" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label class="ml-2 w-75">Login</label>
+                    <label class="row ml-2 w-75" id="UserLogin">@User.Login</label>
+                </div>
+            }
+            <div class="form-group">
+                <label class="ml-2 w-75">Senha</label>
+                <InputText @bind-Value="User.PasswordHash" class="row ml-2 w-75" type="password" id="UserPassword" />
+                <ValidationMessage class="ml-2" For="@(() => User.PasswordHash)" />
+            </div>
+            <div class="form-group">
+                <button class="button-solid my-3 ml-2" type="submit">Salvar</button>
+                <button class="button-solid my-3 ml-2" @onclick="NewUser">Novo</button>
+            </div>
+        </EditForm>
+    </div>
+}

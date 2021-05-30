@@ -1,0 +1,82 @@
+﻿@page "/ClientEdit"
+@page "/ClientEdit/{id:int}"
+@inherits ClientEditBase
+
+@if (Client != null)
+{
+    <EditForm Model="Client" class="container card" OnValidSubmit="SaveClient">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label class="ml-2">Id</label>
+            <label class="ml-2 w-75" type="number" id="ClientId">@Client.Id</label>
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Nome</label>
+            <InputText @bind-Value="Client.Name" class="row ml-2 w-75" type="text" id="ClientName" />
+            <ValidationMessage class="ml-2" For="@(() => Client.Name)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">CPF</label>
+            <InputText @bind-Value="Client.CPF" class="row ml-2 w-75" type="text" id="ClientCPF" />
+            <ValidationMessage class="ml-2" For="@(() => Client.CPF)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Data de nascimento</label>
+            <InputDate @bind-Value="Client.DateOfBirth" class="row ml-2 w-75" id="ClientDateOfBirth" />
+            <ValidationMessage class="ml-2" For="@(() => Client.DateOfBirth)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Ocupação</label>
+            <InputText @bind-Value="Client.Occupation" class="row ml-2 w-75" type="text" id="ClientOccupation" />
+            <ValidationMessage class="ml-2" For="@(() => Client.Occupation)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Telefone</label>
+            <InputText @bind-Value="Client.PhoneNumber" class="row ml-2 w-75" type="text" id="ClientPhoneNumber" />
+            <ValidationMessage class="ml-2" For="@(() => Client.PhoneNumber)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">endereço</label>
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Logradouro</label>
+            <InputText @bind-Value="Client.Address.Street" class="row ml-2 w-75" type="text" id="ClientAddressStreet" />
+            <ValidationMessage class="ml-2" For="@(() => Client.Address.Street)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Número</label>
+            <InputText @bind-Value="Client.Address.Number" class="row ml-2 w-75" type="text" id="ClientAddressNumber" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Complemento</label>
+            <InputText @bind-Value="Client.Address.Complement" class="row ml-2 w-75" type="text" id="ClientAddressComplement" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Bairro</label>
+            <InputText @bind-Value="Client.Address.Neighborhood" class="row ml-2 w-75" type="text" id="ClientAddressNeighborhood" />
+            <ValidationMessage class="ml-2" For="@(() => Client.Address.Neighborhood)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Cidade</label>
+            <InputText @bind-Value="Client.Address.City" class="row ml-2 w-75" type="text" id="ClientAddressCity" />
+            <ValidationMessage class="ml-2" For="@(() => Client.Address.City)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">Estado</label>
+            <InputText @bind-Value="Client.Address.State" class="row ml-2 w-75" type="text" id="ClientAddressState" />
+            <ValidationMessage class="ml-2" For="@(() => Client.Address.State)" />
+        </div>
+        <div class="form-group">
+            <label class="ml-2 w-75">País</label>
+            <InputText @bind-Value="Client.Address.Country" class="row ml-2 w-75" type="text" id="ClientAddressCountry" />
+            <ValidationMessage class="ml-2" For="@(() => Client.Address.Country)" />
+        </div>
+        <div class="form-group">
+            <button class="button-solid my-3 ml-2" type="submit">Salvar</button>
+        </div>
+    </EditForm>
+}
+else
+{
+    <div>Carregando...</div>
+}

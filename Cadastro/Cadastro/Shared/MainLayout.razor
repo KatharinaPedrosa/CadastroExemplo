@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits MainLayoutBase
 
 <div class="page">
     <div class="sidebar">
@@ -6,12 +6,72 @@
     </div>
 
     <div class="main">
-        <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-        </div>
+        <div class="top-row status-bar">
+            @if (service.State.LoggedUser != null)
+            {
+                <div class="current-location">
+                    <div class="mt-1">
+                        <label class="my-auto mx-2" id="CurrentLocation">@service?.State.CurrentLocation</label>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div></div>
+            }
+            <div class="top-row-block @(TopRowHover
+                                        ? (service.State.LoggedUser != null
+                                            ? "top-row-block-hover-logged"
+                                            : "top-row-block-hover")
+                                        : "")"
+                 @onmouseover="() => TopRowHover = true"
+                 @onmouseout="() => TopRowHover = false">
+                @if (service.State.LoggedUser == null)
+                {
+                    <EditForm Model="@LoginUser" OnValidSubmit="Login" class="mt-1 mr-0 row">
+                        <span class="d-inline-flex">
+                            <label class="my-auto mr-2 ml-4">Usuário</label>
+                            <InputText @bind-Value="LoginUser.Login" class="input-sm my-auto mr-2" id="User" />
+                            <ValidationMessage For="@(() => LoginUser.Login)" />
+                        </span>
+                        <div class="d-inline-flex">
+                            <label class="my-auto mr-2 ml-4">Senha</label>
+                            <InputText @bind-Value="LoginUser.PasswordHash" type="password" class="input-sm my-auto mr-2" id="Password" />
+                            <ValidationMessage For="@(() => LoginUser.PasswordHash)" />
+                        </div>
+                        <button class="button my-auto mr-2" id="SignIn">
+                            <span class="oi oi-account-login" aria-hidden="true"></span>
+                        </button>
+                    </EditForm>
+                    <div class="row mt-2 text-center mx-auto">
+                        <label class="m-auto @(LoginFail ? "label-error" : "")" id="LoginMessage">@LoginMessage</label>
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-1">
+                        <button class="button my-auto mr-3" @onclick="service.RequestReload" id="SignOut">
+                            <span class="oi oi-reload" aria-hidden="true"></span>
+                        </button>
+                        <span class="oi oi-person ml-4" aria-hidden="true"></span>
+                        <label class="my-auto mr-2 ml-2">@service.State.LoggedUser.Login</label>
+                        <button class="button my-auto mr-2" @onclick="LogOut" id="SignOut">
+                            <span class="oi oi-account-logout" aria-hidden="true"></span>
+                        </button>
+                    </div>
 
+                }
+            </div>
+        </div>
         <div class="content px-4">
-            @Body
+            @if (Loading)
+            {
+                <div>Carregando...</div>
+            }
+            else
+            {
+                @Body
+            }
         </div>
     </div>
 </div>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cadastro.API.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210529161032_initial")]
+    [Migration("20210530000603_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace Cadastro.API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Neighborhood")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Number")
@@ -85,6 +88,9 @@ namespace Cadastro.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Login")
                         .HasColumnType("TEXT");
 
@@ -99,6 +105,7 @@ namespace Cadastro.API.Migrations
                         new
                         {
                             Id = 1,
+                            IsAdmin = true,
                             Login = "admin",
                             PasswordHash = "21232f297a57a5a743894a0e4a801fc3"
                         });

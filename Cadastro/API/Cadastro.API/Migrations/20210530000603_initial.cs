@@ -31,7 +31,8 @@ namespace Cadastro.API.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Login = table.Column<string>(type: "TEXT", nullable: true),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true)
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
+                    IsAdmin = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,6 +49,7 @@ namespace Cadastro.API.Migrations
                     Street = table.Column<string>(type: "TEXT", nullable: true),
                     Number = table.Column<string>(type: "TEXT", nullable: true),
                     Complement = table.Column<string>(type: "TEXT", nullable: true),
+                    Neighborhood = table.Column<string>(type: "TEXT", nullable: true),
                     City = table.Column<string>(type: "TEXT", nullable: true),
                     State = table.Column<string>(type: "TEXT", nullable: true),
                     Country = table.Column<string>(type: "TEXT", nullable: true)
@@ -65,8 +67,8 @@ namespace Cadastro.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Login", "PasswordHash" },
-                values: new object[] { 1, "admin", "21232f297a57a5a743894a0e4a801fc3" });
+                columns: new[] { "Id", "IsAdmin", "Login", "PasswordHash" },
+                values: new object[] { 1, true, "admin", "21232f297a57a5a743894a0e4a801fc3" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_ClientId",

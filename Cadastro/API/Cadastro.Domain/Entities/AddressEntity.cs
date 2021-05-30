@@ -1,6 +1,8 @@
-﻿namespace Cadastro.Domain.Entities
+﻿using Cadastro.Domain.Abstraction.Entities;
+
+namespace Cadastro.Domain.Entities
 {
-    public class AddressEntity
+    public class AddressEntity : IEntity
     {
         public int Id { get; set; }
 
@@ -11,6 +13,8 @@
         public string Number { get; set; }
 
         public string Complement { get; set; }
+
+        public string Neighborhood { get; set; }
 
         public string City { get; set; }
 

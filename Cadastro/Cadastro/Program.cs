@@ -1,12 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using Cadastro.Abstractions.Helpers;
+using Cadastro.Abstractions.Services;
+using Cadastro.Domain.Configuration;
+using Cadastro.Helpers;
+using Cadastro.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Cadastro
 {
@@ -19,7 +21,24 @@ namespace Cadastro
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+            ConfigureServices(builder.Services);
+
             await builder.Build().RunAsync();
+        }
+
+        public static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSingleton(provider =>
+            {
+                var config = provider.GetService<IConfiguration>();
+                return config.GetSection("CadastroApi").Get<ApiConfiguration>();
+            });
+
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IClientService, ClientService>();
+            services.AddSingleton<IHashHelper, HashHelper>();
+            services.AddSingleton<ILocalStorageHelper, LocalStorageHelper>();
+            services.AddSingleton<ICadastroService, CadastroService>();
         }
     }
 }

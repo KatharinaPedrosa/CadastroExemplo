@@ -1,21 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Cadastro.Domain.DTOs;
+using Cadastro.Domain.Entities;
 
 namespace Cadastro.Domain.Abstraction.Services
 {
-    public interface IUserService
+    public interface IUserService : IServiceBase<User, UserEntity>
     {
         Task<User> Login(User user);
-
-        Task<IList<User>> GetUsers();
-
-        Task<User> GetUser(int id);
-
-        Task<int> AddUser(User user);
-
-        Task<int> UpdateUser(User user);
-
-        Task<int> DeleteUser(int id);
     }
 }

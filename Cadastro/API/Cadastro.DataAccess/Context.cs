@@ -44,7 +44,7 @@ namespace Cadastro.Repositories
 
             modelBuilder.Entity<UserEntity>()
                 .HasData(
-                    new UserEntity() { Id = 1, Login = "admin", PasswordHash = "21232f297a57a5a743894a0e4a801fc3" }
+                    new UserEntity() { Id = 1, Login = "admin", PasswordHash = "21232f297a57a5a743894a0e4a801fc3", IsAdmin = true }
                 );
         }
 

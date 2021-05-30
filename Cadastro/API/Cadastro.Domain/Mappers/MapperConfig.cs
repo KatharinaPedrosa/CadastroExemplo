@@ -10,23 +10,33 @@ namespace Cadastro.Domain.Mappers
         {
             ConfigureClient();
             ConfigureUser();
+            ConfigureAddress();
         }
 
         private void ConfigureUser()
         {
-            CreateMap<User, UserEntity>();
+            CreateMap<User, UserEntity>()
+                .ForMember(
+                    dest => dest.IsAdmin,
+                    opt => opt.MapFrom(v => false));
             CreateMap<UserEntity, User>()
                 .ForMember(
-                dest => dest.PasswordHash,
-                opt => opt.Ignore())
+                    dest => dest.PasswordHash,
+                    opt => opt.Ignore())
                 .ForMember(
-                dest => dest.Token,
-                opt => opt.Ignore());
+                    dest => dest.Token,
+                    opt => opt.Ignore());
         }
 
         private void ConfigureClient()
         {
             CreateMap<Client, ClientEntity>()
+                .ReverseMap();
+        }
+
+        private void ConfigureAddress()
+        {
+            CreateMap<Address, AddressEntity>()
                 .ReverseMap();
         }
     }

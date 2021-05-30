@@ -1,19 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Cadastro.Domain.DTOs;
+﻿using Cadastro.Domain.DTOs;
+using Cadastro.Domain.Entities;
 
 namespace Cadastro.Domain.Abstraction.Services
 {
-    public interface IClientService
+    public interface IClientService : IServiceBase<Client, ClientEntity>
     {
-        Task<IList<Client>> GetClients();
-
-        Task<Client> GetClient(int id);
-
-        Task<int> AddClient(Client client);
-
-        Task<int> UpdateClient(Client client);
-
-        Task<int> DeleteClient(int id);
     }
 }

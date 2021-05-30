@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Cadastro.Domain.Abstraction.DTOs;
+using Cadastro.Domain.Abstraction.Entities;
 using Cadastro.Domain.Abstraction.Services;
-using Cadastro.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,21 +11,23 @@ namespace Cadastro.API.Controllers
     [Authorize]
     [Produces("application/json")]
     [Route("/[controller]")]
-    public class UserContoller : Controller
+    public class BaseController<TDTO, TEntity> : Controller
+        where TDTO : class, IDTO, new()
+        where TEntity : class, IEntity, new()
     {
-        private IUserService service;
+        private IServiceBase<TDTO, TEntity> service;
 
-        public UserContoller(IUserService service)
+        public BaseController(IServiceBase<TDTO, TEntity> service)
         {
             this.service = service;
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Add([FromBody] User dto)
+        public virtual async Task<IActionResult> Add([FromBody] TDTO dto)
         {
             try
             {
-                var result = await service.AddUser(dto);
+                var result = await service.Add(dto);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -38,7 +41,11 @@ namespace Cadastro.API.Controllers
         {
             try
             {
-                var result = await service.DeleteUser(id);
+                var result = await service.Delete(id);
+                if (result == 0)
+                {
+                    return StatusCode(404, null);
+                }
                 return Ok(result);
             }
             catch (Exception ex)
@@ -52,7 +59,7 @@ namespace Cadastro.API.Controllers
         {
             try
             {
-                var result = await service.GetUsers();
+                var result = await service.GetAll();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -66,7 +73,11 @@ namespace Cadastro.API.Controllers
         {
             try
             {
-                var result = await service.GetUser(id);
+                var result = await service.GetById(id);
+                if (result == null)
+                {
+                    return StatusCode(404, null);
+                }
                 return Ok(result);
             }
             catch (Exception ex)
@@ -76,26 +87,15 @@ namespace Cadastro.API.Controllers
         }
 
         [HttpPut]
-        public virtual async Task<IActionResult> Update([FromBody] User dto)
+        public virtual async Task<IActionResult> Update([FromBody] TDTO dto)
         {
             try
             {
-                var result = await service.UpdateUser(dto);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-        [HttpPost("login")]
-        [AllowAnonymous]
-        public virtual async Task<IActionResult> Login([FromBody] User dto)
-        {
-            try
-            {
-                var result = await service.Login(dto);
+                var result = await service.Update(dto);
+                if (result == 0)
+                {
+                    return StatusCode(404, null);
+                }
                 return Ok(result);
             }
             catch (Exception ex)

@@ -1,8 +1,9 @@
 ﻿using System;
+using Cadastro.Domain.Abstraction.Entities;
 
 namespace Cadastro.Domain.Entities
 {
-    public class ClientEntity
+    public class ClientEntity : IEntity
     {
         public int Id { get; set; }
 
