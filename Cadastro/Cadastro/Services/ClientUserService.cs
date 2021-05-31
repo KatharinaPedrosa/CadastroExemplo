@@ -7,9 +7,9 @@ using Cadastro.Extenssions;
 
 namespace Cadastro.Services
 {
-    public class UserService : ServiceBase<User>, IUserService
+    public class ClientUserService : ClientServiceBase<User>, IUserService
     {
-        public UserService(ApiConfiguration apiConfiguration)
+        public ClientUserService(ApiConfiguration apiConfiguration)
             : base(apiConfiguration, "User")
         {
         }

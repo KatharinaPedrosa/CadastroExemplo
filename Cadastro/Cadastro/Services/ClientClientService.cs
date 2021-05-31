@@ -4,9 +4,9 @@ using Cadastro.Domain.DTOs;
 
 namespace Cadastro.Services
 {
-    public class ClientService : ServiceBase<Client>, IClientService
+    public class ClientClientService : ClientServiceBase<Client>, IClientService
     {
-        public ClientService(ApiConfiguration apiConfiguration)
+        public ClientClientService(ApiConfiguration apiConfiguration)
             : base(apiConfiguration, "Client")
         {
         }

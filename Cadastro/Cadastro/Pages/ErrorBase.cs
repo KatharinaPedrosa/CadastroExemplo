@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Cadastro.Abstractions.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -15,7 +14,7 @@ namespace Cadastro.Pages
 
         public bool Collapsed { get; set; } = true;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             service.StateChange += ((s, e) => StateHasChanged());
             service.State.CurrentLocation = "Erro";

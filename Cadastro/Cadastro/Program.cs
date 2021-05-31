@@ -34,8 +34,8 @@ namespace Cadastro
                 return config.GetSection("CadastroApi").Get<ApiConfiguration>();
             });
 
-            services.AddSingleton<IUserService, UserService>();
-            services.AddSingleton<IClientService, ClientService>();
+            services.AddSingleton<IUserService, ClientUserService>();
+            services.AddSingleton<IClientService, ClientClientService>();
             services.AddSingleton<IHashHelper, HashHelper>();
             services.AddSingleton<ILocalStorageHelper, LocalStorageHelper>();
             services.AddSingleton<ICadastroService, CadastroService>();

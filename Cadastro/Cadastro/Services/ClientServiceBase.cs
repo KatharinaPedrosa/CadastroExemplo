@@ -10,13 +10,13 @@ using Cadastro.Extenssions;
 
 namespace Cadastro.Services
 {
-    public class ServiceBase<T> : IServiceBase<T>
+    public class ClientServiceBase<T> : IServiceBase<T>
         where T : class, IDTO, new()
     {
         protected HttpClient httpClient;
         protected string api;
 
-        public ServiceBase(ApiConfiguration apiConfiguration, string api)
+        public ClientServiceBase(ApiConfiguration apiConfiguration, string api)
         {
             this.api = api;
             httpClient = new HttpClient();
