@@ -23,6 +23,7 @@ namespace Cadastro.Domain.DTOs
         [ValidateBirthDate(ErrorMessage = "Data de nascimento inválida")]
         public DateTime DateOfBirth { get; set; }
 
+        [ValidateComplexType]
         public Address Address { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Campo Telefone obrigatório")]

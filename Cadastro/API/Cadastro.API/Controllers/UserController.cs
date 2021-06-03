@@ -30,6 +30,10 @@ namespace Cadastro.API.Controllers
                 var result = await service.Login(dto);
                 return Ok(result);
             }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);

@@ -5,7 +5,7 @@
 @if (Client != null)
 {
     <EditForm Model="Client" class="container card" OnValidSubmit="SaveClient">
-        <DataAnnotationsValidator />
+        <ObjectGraphDataAnnotationsValidator />
         <div class="form-group">
             <label class="ml-2">Id</label>
             <label class="ml-2 w-75" type="number" id="ClientId">@Client.Id</label>
