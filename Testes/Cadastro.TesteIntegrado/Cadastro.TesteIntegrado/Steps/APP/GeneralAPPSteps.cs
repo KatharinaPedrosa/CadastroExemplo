@@ -9,6 +9,10 @@ using OpenQA.Selenium.Chrome;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
+using Cadastro.Domain.DTOs;
+using OpenQA.Selenium.Html5;
+using System.Text.Json;
+using OpenQA.Selenium.Support.UI;
 
 namespace Cadastro.TesteIntegrado.Steps.APP
 {
@@ -27,7 +31,8 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         {
             contexto.WebDriver = new ChromeDriver("Driver");
             contexto.WebDriver.Navigate().GoToUrl("http://localhost:1501/");
-            Thread.Sleep(2000);
+            contexto.WebDriverWait = new WebDriverWait(contexto.WebDriver, TimeSpan.FromSeconds(10));
+            contexto.Wait("SignIn");
         }
 
         [When(@"I type ""(.*)"" on ""(.*)"" field")]
@@ -37,12 +42,32 @@ namespace Cadastro.TesteIntegrado.Steps.APP
             campo.SendKeys(value);
         }
 
-        [When(@"I click on (?:button|menu) ""(.*)""")]
-        public void WhenIClickOnButton(string button)
+        [When(@"I click on (button|menu) ""(.*)""")]
+        [Given(@"that I'm on (button|menu) ""(.*)""")]
+        public void WhenIClickOnButton(string tipo, string valor)
         {
-            var botao = contexto.WebDriver.FindElement(By.Id(button));
+            var tag = "";
+            switch (tipo)
+            {
+                case "button":
+                    tag = "button";
+                    break;
+
+                case "menu":
+                    tag = "a";
+                    break;
+
+                default:
+                    tag = "div";
+                    break;
+            }
+            var botao = contexto.WebDriver.FindElements(By.Id(valor)).FirstOrDefault();
+            if (botao == null)
+            {
+                botao = contexto.WebDriver.FindElements(By.TagName(tag))
+                    .FirstOrDefault(b => b.Text.Equals(valor));
+            }
             botao.Click();
-            Thread.Sleep(2000);
         }
 
         [Given(@"That I'm logged on the app, with user ""(.*)"" and password ""(.*)""")]
@@ -50,7 +75,12 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         {
             WhenITypeOnField(user, "Login");
             WhenITypeOnField(password, "Password");
-            WhenIClickOnButton("SignIn");
+            WhenIClickOnButton("button", "SignIn");
+            contexto.Wait("SignOut");
+            var loggedUserString = contexto.WebDriver
+                .ExecuteScript("return localStorage.getItem('LoggedUser');")
+                .ToString();
+            contexto.UsuarioLogado = JsonSerializer.Deserialize<User>(loggedUserString);
         }
 
         [Then(@"the (?:label|field) ""(.*)"" shows ""(.*)""")]
@@ -58,6 +88,7 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         {
             try
             {
+                contexto.Wait(field);
                 var elemento = contexto.WebDriver.FindElement(By.Id(field));
                 elemento.Text.Should().Be(value, "porque o valor deve ser encontrado");
             }
@@ -67,11 +98,22 @@ namespace Cadastro.TesteIntegrado.Steps.APP
             }
         }
 
+        [When(@"I fill the fields with the following data")]
+        public void WhenIFillTheFieldsWithTheFollowingData(Table table)
+        {
+            foreach (var linha in table.Rows)
+            {
+                var campo = contexto.WebDriver.FindElement(By.Id(linha[0]));
+                campo.SendKeys(linha[1]);
+            }
+        }
+
         [After("APP")]
         public void FecharNavegador()
         {
             if (contexto.WebDriver != null)
             {
+                contexto.WebDriver.ExecuteScript("localStorage.removeItem('LoggedUser')");
                 contexto.WebDriver.Quit();
                 contexto.WebDriver = null;
             }

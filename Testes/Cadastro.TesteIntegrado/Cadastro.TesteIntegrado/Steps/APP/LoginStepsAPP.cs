@@ -24,7 +24,6 @@ namespace Cadastro.TesteIntegrado.Steps.APP
             {
                 var signOut = contexto.WebDriver.FindElement(By.Id("SignOut"));
                 signOut.Click();
-                Thread.Sleep(2000);
             }
             catch (NoSuchElementException)
             {
@@ -36,6 +35,7 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         {
             try
             {
+                contexto.Wait("SignOut");
                 var signOut = contexto.WebDriver.FindElement(By.Id("SignOut"));
             }
             catch (NoSuchElementException)
@@ -49,6 +49,7 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         {
             try
             {
+                contexto.Wait("SignOut");
                 var topRow = contexto.WebDriver.FindElement(By.ClassName("top-row-block"));
                 var usuario = topRow.FindElement(By.TagName("label"));
                 usuario.Text.Should().Be(loggedUser);
@@ -64,6 +65,7 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         {
             try
             {
+                contexto.Wait("LoginMessage");
                 var mensagemLogin = contexto.WebDriver.FindElement(By.Id("LoginMessage"));
                 mensagemLogin.Text.Should().Be("Usuário ou senha inválidos", "porque o usuário não deve estar logado");
             }
@@ -78,6 +80,7 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         {
             try
             {
+                contexto.Wait("SignIn");
                 var botaoSignIn = contexto.WebDriver.FindElement(By.Id("SignIn"));
                 botaoSignIn.Should().NotBeNull();
             }

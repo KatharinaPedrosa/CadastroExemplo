@@ -1,5 +1,7 @@
 ﻿using Cadastro.Domain.DTOs;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,16 @@ namespace Cadastro.TesteIntegrado
 
         public User UsuarioEncontrado { get; set; }
 
-        public IWebDriver WebDriver { get; set; }
+        public ChromeDriver WebDriver { get; set; }
+
+        public WebDriverWait WebDriverWait { get; set; }
+
+        public void Wait(string id)
+        {
+            if (WebDriverWait != null)
+            {
+                WebDriverWait.Until(driver => driver.FindElements(By.Id(id)).Any());
+            }
+        }
     }
 }
