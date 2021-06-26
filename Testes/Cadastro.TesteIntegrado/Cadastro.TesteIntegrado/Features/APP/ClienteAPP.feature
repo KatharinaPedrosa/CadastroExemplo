@@ -28,4 +28,6 @@ Scenario: Clients visualization grid
 	| Abelardo | 1478-3695   | 
 	And the grid must have 5 clients
 
+	
+
 

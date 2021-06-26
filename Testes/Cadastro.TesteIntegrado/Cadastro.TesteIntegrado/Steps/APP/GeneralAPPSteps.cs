@@ -83,14 +83,23 @@ namespace Cadastro.TesteIntegrado.Steps.APP
             contexto.UsuarioLogado = JsonSerializer.Deserialize<User>(loggedUserString);
         }
 
-        [Then(@"the (?:label|field) ""(.*)"" shows ""(.*)""")]
-        public void ThenTheLabelShows(string field, string value)
+        [Then(@"the (label|field|input) ""(.*)"" shows ""(.*)""")]
+        public void ThenTheLabelShows(string tipo, string field, string value)
         {
             try
             {
                 contexto.Wait(field);
                 var elemento = contexto.WebDriver.FindElement(By.Id(field));
-                elemento.Text.Should().Be(value, "porque o valor deve ser encontrado");
+                switch (tipo)
+                {
+                    case "input":
+                        elemento.GetAttribute("value").Should().Be(value, "porque o valor deve ser encontrado");
+                        break;
+
+                    default:
+                        elemento.Text.Should().Be(value, "porque o valor deve ser encontrado");
+                        break;
+                }
             }
             catch (NoSuchElementException)
             {
@@ -106,6 +115,22 @@ namespace Cadastro.TesteIntegrado.Steps.APP
                 var campo = contexto.WebDriver.FindElement(By.Id(linha[0]));
                 campo.SendKeys(linha[1]);
             }
+        }
+
+        [When(@"I type the current date on the field (.*)")]
+        public void WhenITypeTheCurrentDateOnTheField(string field)
+        {
+            var dataAtual = DateTime.Now;
+            var campo = contexto.WebDriver.FindElement(By.Id(field));
+            campo.SendKeys(dataAtual.ToString("dd/MM/yyyy"));
+        }
+
+        [When(@"I type the current date minus (.*) years on the field (.*)")]
+        public void WhenITypeTheCurrentDateMinusYearsOnTheField(int anos, string field)
+        {
+            var data = DateTime.Now.AddYears(anos * -1);
+            var campo = contexto.WebDriver.FindElement(By.Id(field));
+            campo.SendKeys(data.ToString("dd/MM/yyyy"));
         }
 
         [After("APP")]

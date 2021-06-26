@@ -95,5 +95,46 @@ namespace Cadastro.TesteIntegrado.Steps.APP
                 .Where(linha => !linha.GetAttribute("class").Contains("cabecalho"));
             linhas.Should().HaveCount(quantidade);
         }
+
+        [Then(@"the following validation fields are shown")]
+        public void ThenTheFollowingValidationFieldsAreShown(Table table)
+        {
+            var campos = contexto.WebDriver.FindElements(By.ClassName("form-group"));
+
+            foreach (var linha in table.Rows)
+            {
+                var campo = campos.Where(campo => campo.FindElements(By.Id(linha[0])).Any()).FirstOrDefault();
+                var validationMessage = campo.FindElement(By.ClassName("validation-message"));
+                validationMessage.Text.Should().Be(linha[1]);
+            }
+        }
+
+        [When(@"I click on (.*) on client ""(.*)""")]
+        public void WhenIClickOnClient(string button, string cliente)
+        {
+            var linhas =
+                contexto.WebDriver
+                .FindElements(By.XPath("//div[@class='main']/div[2]/div[@class='container']//div"))
+                .Where(linha => !linha.GetAttribute("class").Contains("cabecalho"));
+            foreach (var linha in linhas)
+            {
+                var campoNome = linha.FindElement(By.XPath(".//span[2]"));
+
+                if (campoNome.Text != cliente) continue;
+
+                if (button == "edit")
+                {
+                    var campoEdit = linha.FindElement(By.XPath(".//span[4]"));
+                    campoEdit.Click();
+                }
+                else
+                {
+                    var campoRemove = linha.FindElement(By.XPath(".//span[5]"));
+                    campoRemove.Click();
+                }
+
+                break;
+            }
+        }
     }
 }

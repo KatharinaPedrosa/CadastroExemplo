@@ -169,32 +169,32 @@ this.ScenarioInitialize(scenarioInfo);
 #line 12
  testRunner.Given("That I\'m logged on the app, with user \"admin\" and password \"admin\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "PhoneNumber",
                             "CPF"});
-                table11.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "Matheus",
                             "6389-5241",
                             "576.292.670-29"});
-                table11.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "Luiza",
                             "7418-9541",
                             "714.812.560-09"});
-                table11.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "Joana",
                             "8524-9632",
                             "030.683.800-14"});
-                table11.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "Frida",
                             "4152-9638",
                             "229.987.910-26"});
-                table11.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "Abelardo",
                             "1478-3695",
                             "123.367.040-99"});
 #line 13
- testRunner.And("that the following clients data are on the database", ((string)(null)), table11, "And ");
+ testRunner.And("that the following clients data are on the database", ((string)(null)), table17, "And ");
 #line hidden
 #line 20
  testRunner.When("I click on menu \"MenuClients\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -202,26 +202,26 @@ this.ScenarioInitialize(scenarioInfo);
 #line 21
  testRunner.Then("the label \"CurrentLocation\" shows \"Início\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-                TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "PhoneNumber"});
-                table12.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "Matheus",
                             "6389-5241"});
-                table12.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "Luiza",
                             "7418-9541"});
-                table12.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "Joana",
                             "8524-9632"});
-                table12.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "Frida",
                             "4152-9638"});
-                table12.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "Abelardo",
                             "1478-3695"});
 #line 22
- testRunner.And("the grid must have the following clients", ((string)(null)), table12, "And ");
+ testRunner.And("the grid must have the following clients", ((string)(null)), table18, "And ");
 #line hidden
 #line 29
  testRunner.And("the grid must have 5 clients", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
