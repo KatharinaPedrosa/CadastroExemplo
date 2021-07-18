@@ -94,3 +94,14 @@ Scenario: Clients edit
 	Examples: 
 	| nome    | telefone  | cpf            |
 	| Matheus | 6389-5241 | 576.292.670-29 |
+
+Scenario Outline: Clients delete 
+	Given That I'm logged on the app, with user "admin" and password "admin"
+	And that the following clients data are on the database
+	| Name   | PhoneNumber | CPF   |
+	| <nome> | <telefone>  | <cpf> |
+	When I click on remove on client "<nome>"
+	Then a client with name "<nome>" it's not present on the database 	
+	Examples: 
+	| nome  | telefone  | cpf            |
+	| Luiza | 6389-5241 | 576.292.670-29 |

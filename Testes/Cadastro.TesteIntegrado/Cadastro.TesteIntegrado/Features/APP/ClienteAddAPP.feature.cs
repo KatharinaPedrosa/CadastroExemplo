@@ -607,6 +607,73 @@ this.ScenarioInitialize(scenarioInfo);
 this.ClientsEdit("Matheus", "6389-5241", "576.292.670-29", ((string[])(null)));
 #line hidden
         }
+        
+        public virtual void ClientsDelete(string nome, string telefone, string cpf, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("nome", nome);
+            argumentsOfScenario.Add("telefone", telefone);
+            argumentsOfScenario.Add("cpf", cpf);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Clients delete", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 98
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 99
+ testRunner.Given("That I\'m logged on the app, with user \"admin\" and password \"admin\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "PhoneNumber",
+                            "CPF"});
+                table17.AddRow(new string[] {
+                            string.Format("{0}", nome),
+                            string.Format("{0}", telefone),
+                            string.Format("{0}", cpf)});
+#line 100
+ testRunner.And("that the following clients data are on the database", ((string)(null)), table17, "And ");
+#line hidden
+#line 103
+ testRunner.When(string.Format("I click on remove on client \"{0}\"", nome), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 104
+ testRunner.Then(string.Format("a client with name \"{0}\" it\'s not present on the database", nome), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Clients delete: Luiza")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "ClienteAddAPP")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("APP")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Luiza")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:nome", "Luiza")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:telefone", "6389-5241")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:cpf", "576.292.670-29")]
+        public virtual void ClientsDelete_Luiza()
+        {
+#line 98
+this.ClientsDelete("Luiza", "6389-5241", "576.292.670-29", ((string[])(null)));
+#line hidden
+        }
     }
 }
 #pragma warning restore

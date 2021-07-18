@@ -38,7 +38,9 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         [When(@"I type ""(.*)"" on ""(.*)"" field")]
         public void WhenITypeOnField(string value, string field)
         {
+            contexto.Wait(field);
             var campo = contexto.WebDriver.FindElement(By.Id(field));
+            campo.Clear();
             campo.SendKeys(value);
         }
 

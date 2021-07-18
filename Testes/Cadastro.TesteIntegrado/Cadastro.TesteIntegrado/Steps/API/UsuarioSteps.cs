@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading;
 using TechTalk.SpecFlow;
 
 namespace Cadastro.TesteIntegrado.Steps.API
@@ -107,6 +108,7 @@ namespace Cadastro.TesteIntegrado.Steps.API
         [Then(@"a user with login ""(.*)"" it's not present on the database")]
         public void ThenAUserWithLoginItSNotPresentOnTheDatabase(string login)
         {
+            Thread.Sleep(2000);
             httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", contexto.UsuarioLogado.Token);
 
