@@ -61,3 +61,9 @@ Scenario: Edit a user
 	Examples:
 	| user  | password |
 	| luffy | monkey   |
+
+	Scenario Outline: Don't delete admin user
+	Given That I'm logged on the app, with user "admin" and password "admin"
+	When I click on menu "MenuUsers"		
+	Then the button "Remove-1" it's not shown
+	

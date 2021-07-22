@@ -47,6 +47,7 @@ namespace Cadastro.TesteIntegrado.Steps.APP
         }
 
         [Then(@"the menu ""(.*)"" it's not shown")]
+        [Then(@"the button ""(.*)"" it's not shown")]
         public void ThenTheMenuItSNotShown(string menu)
         {
             var menus = contexto.WebDriver.FindElements(By.Id(menu));
